@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+
+
+.scrollbar-none::-webkit-scrollbar{
+    display: none;
+}       
+
+.mayurScroll::-webkit-scrollbar{
+    width: 7px;
+  
+   @apply bg-white 
+   
+}
+
+
+.mayurScroll::-webkit-scrollbar-thumb{
+    @apply bg-amber-300 rounded-lg cursor-pointer
+}
+
+
