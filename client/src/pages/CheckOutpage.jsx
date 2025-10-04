@@ -88,7 +88,7 @@ const HandleCashOndelivery = async () => {
                 duration: 3000
             });
             
-            navigate('/orders'); // Navigate to orders page instead of success
+            navigate('/myorders'); // Navigate to orders page instead of success
         } else {
             throw new Error(response?.data?.message || "Failed to place order");
         }

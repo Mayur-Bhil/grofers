@@ -33,7 +33,7 @@ const Success = () => {
                         id: 'payment-success'
                     });
 
-                    setTimeout(() => navigate('/orders'), 2000);
+                    setTimeout(() => navigate('/myorders'), 2000);
                 } else {
                     throw new Error(response.data.message || 'Failed to complete order');
                 }
@@ -51,7 +51,6 @@ const Success = () => {
         completeOrder();
     }, [navigate, dispatch, clearCartData, searchParams]);
 
-    // ... rest of your component code
 };
 
 export default Success;
