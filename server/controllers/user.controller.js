@@ -17,18 +17,45 @@ export default async function registerUserController(req,res) {
         const email = req.body.email;
         const password = req.body.password;
 
+        // Basic presence check
         if(!name || !email || !password){
             return res.status(400).json({
-                message:"provide email,name,password",
+                message:"provide email, name, password",
                 error:true, 
+                success:false
+            })
+        }
+
+        // PASSWORD VALIDATION - Add this block
+        if(password.length < 6){
+            return res.status(400).json({
+                message:"Password must be at least 6 characters",
+                error:true,
+                success:false
+            })
+        }
+
+        if(password.length > 128){
+            return res.status(400).json({
+                message:"Password is too long",
+                error:true,
+                success:false
+            })
+        }
+
+        // Optional: Add complexity requirements
+        if(!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)){
+            return res.status(400).json({
+                message:"Password must contain uppercase, lowercase and number",
+                error:true,
                 success:false
             })
         }
 
         const user = await User.findOne({email:email})
         if(user){
-            return res.send({
-                message:"already registerd user",
+            return res.status(400).json({
+                message:"Email already registered",
                 error: true,
                 success: false
             })
@@ -46,21 +73,19 @@ export default async function registerUserController(req,res) {
         const newUser = new User(payload);
         const save = await newUser.save();
 
-        const  verifyEmailUrl = `${process.env.BASE_URL}/verify-email?code=${save._id}`
+        const verifyEmailUrl = `${process.env.BASE_URL}/verify-email?code=${save._id}`
 
         const verifyEmail = await sendEmail({
             sendTo:email,
-            subject:"verification Email for your Account",
+            subject:"Verification Email for your Account",
             html:verificatioEmailTemplate({
                 name,
                 url:verifyEmailUrl
-                
             })
         })
-      
 
         return res.json({   
-            message:"User registerd successFully",
+            message:"User registered successfully",
             error:false,
             success:true,
             data:save
@@ -73,7 +98,6 @@ export default async function registerUserController(req,res) {
         })
     }
 }
-
 
 export async function verifyEmailController(req,res){
     try {

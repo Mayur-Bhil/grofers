@@ -96,9 +96,9 @@ const forgotpasswordTemplate = ({name,otp})=>{
         <p>If you didn't request this password reset, please contact our support team immediately.</p>
         
         <div class="footer">
-            <p>If you're having trouble, contact support at support@blinkit.com</p>
+            <p>If you're having trouble, contact support at support@Grofers.com</p>
             <p> Thanks </p>
-            <p>Blinkit</p>
+            <p>Grofers</p>
         </div>
     </div>
 

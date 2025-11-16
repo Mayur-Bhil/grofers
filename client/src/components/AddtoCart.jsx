@@ -7,20 +7,23 @@ import Axios from '../utils/useAxios';
 import { useSelector } from 'react-redux';
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
+import isAdmin from '../utils/isAdmin';
 
 const AddtoCart = ({data}) => {
         const [loading,setLoading] = useState(false); 
         const { fetchCartData ,updateQuntity,deleteCartItems} = useGlobalContext();
         const cartItems = useSelector((store) => store?.cart?.cart || []);
+        const user = useSelector((store) => store.user);
      //    console.log("Cart-Items",cartItems );
         const [isAvailableCart,setUSeAvailableCart] = useState(false);
         const [qty,setQty] = useState(0);
         const [cartitemDetails,setCartItemDetails] = useState();
+     
      const handleAddToCart = async(e) => {
           e.preventDefault();
-          e.stopPropagation(); // Fixed typo: was stopPropagination
+          e.stopPropagation();
           
-          setLoading(true); // Set loading to true at the start
+          setLoading(true);
           
           try {
                const response = await Axios({
@@ -44,13 +47,12 @@ const AddtoCart = ({data}) => {
 
      useEffect(() => {
     const checkCartItems = cartItems.some((item) =>item.productId._id === data._id);
-    setUSeAvailableCart(checkCartItems); // Fix: Use checkCartItems, not hardcoded true
+    setUSeAvailableCart(checkCartItems);
     
     if (checkCartItems) {
         const product = cartItems.find(item => item.productId._id === data._id);
      //    console.log("Product quantity", product);
         
-        // Fix: Set the quantity from the found product
         if (product && product.quantity !== undefined) {
             setQty(product.quantity);
            setCartItemDetails(product)
@@ -67,6 +69,7 @@ const AddtoCart = ({data}) => {
 
           updateQuntity(cartitemDetails?._id,qty+1);
      }
+     
      const decreseQty = (e)=>{
           e.preventDefault();
           e.stopPropagation();
@@ -74,10 +77,14 @@ const AddtoCart = ({data}) => {
                deleteCartItems(cartitemDetails?._id)
           }else{
                updateQuntity(cartitemDetails?._id,qty-1);
-
           }
-          
      }
+
+     // Don't render anything if user is admin
+     if(isAdmin(user.role)){
+          return null;
+     }
+     
      return (
     <div className='w-full max-w-[150px]'>
      {
@@ -91,11 +98,11 @@ const AddtoCart = ({data}) => {
                </div>
           ):(
                <button
-                         className={`bg-green-400 cursor-pointer hover:bg-green-600 text-white px-4 py-1 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`} // Add loading state styling
+                         className={`bg-green-400 cursor-pointer hover:bg-green-600 text-white px-4 py-1 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                          onClick={handleAddToCart}
-                         disabled={loading} // Disable button when loading
+                         disabled={loading}
                          >
-                                        {loading ? "Adding": 'Add'} {/* Show loading text */}
+                                        {loading ? "Adding": 'Add'}
                </button>
           )
      }
