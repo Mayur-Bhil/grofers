@@ -1,11 +1,9 @@
 import React from 'react';
 import Usermenu from '../components/Usermenu';
 import { Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
-    const user = useSelector((store)=>store.user);
-    console.log(user);
+   
     
     return (
         <section className='bg-white select-none '>
