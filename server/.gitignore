@@ -137,3 +137,11 @@ dist
 
 # SvelteKit build / generate output
 .svelte-kit
+
+# Manual Changes 
+
+client/node_modules
+server/node_modules
+.env
+.client/.env
+.server/.env

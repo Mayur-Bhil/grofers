@@ -38,7 +38,7 @@ export const UserSclice = createSlice({
 
 
         },
-        logoutUser:(state,action)=>{
+        logoutUser:(state)=>{
             state._id = ""      
             state.name = ""
             state.email = ""
