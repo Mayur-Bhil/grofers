@@ -75,7 +75,7 @@ const Register = () => {
   return (
     <section className="w-full container flex justify-center mx-auto px-2">
             <div className='bg-white my-4 w-full max-w-lg mx-auto rounded-lg shadow-gray-800 p-4 mt-9'>
-                    <p className='text-2xl'>Welcome to Blinkit</p>
+                    <p className='text-2xl'>Welcome to Grofers</p>
                     <form action="/login" onSubmit={handelSubmit} className='grid gap-2 mt-5'>
                         <div className='grid gap-1' >
                             <label htmlFor="name" className='font-semibold '>Name :</label>

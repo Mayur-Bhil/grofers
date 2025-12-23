@@ -23,10 +23,10 @@ const Profile = () => {
 
     useEffect(()=>{
         setUserData({
-        name:user.name,
-        email:user.email,
-        mobile:user.mobile
-    })
+            name:user.name,
+            email:user.email,
+            mobile:user.mobile
+        })
     },[user])
     
     const handelOnChange = (e) =>{
@@ -37,12 +37,18 @@ const Profile = () => {
                 ...prev,
                 [name]:value
             }
-
         })
     }
 
     const HandleSubmit = async(e)=>{
         e.preventDefault();
+        
+        // Validate mobile number length
+        if(userData.mobile && (userData.mobile.length < 10 || userData.mobile.length > 12)){
+            toast.error("Mobile number must be between 10 and 12 digits");
+            return;
+        }
+        
         try {
             SetLoading(true);
             const response = await Axios({
@@ -56,8 +62,7 @@ const Profile = () => {
             if(responseData.success){
                 toast.success(response.data.message);
                 const Userdata = await getUserDetails();
-      // console.log("data",Userdata.data.data);
-             dispatch(setUserDetails(Userdata.data.data))
+                dispatch(setUserDetails(Userdata.data.data))
             }
             console.log(response);
         } catch (error) {
@@ -65,8 +70,8 @@ const Profile = () => {
         }finally{
             SetLoading(false)
         }
-        
     }
+    
     return (
         <div>
             {/* profile upload and display Image */}
@@ -100,32 +105,33 @@ const Profile = () => {
                 />
             </div>
             <div className='grid'>
-                <label htmlFor="Email">Email</label>
+                <label htmlFor="email">Email</label>
                 <input type="email"
                 placeholder='Email'
                 className='grid p-2 bg-blue-50 outline-none border-2 focus-within:border-amber-300'
-                name='Email'
-                id='Email'
+                name='email'
+                id='email'
                 value={userData.email}
                 onChange={handelOnChange}
                 required
                 />
             </div>
            <div className='grid'>
-                <label htmlFor="Mobile">Mobile no</label>
-                <input type="number"
-                minLength={10}
-                maxLength={12}
+                <label htmlFor="mobile">Mobile no</label>
+                <input type="text"
+                pattern="[0-9]{10,12}"
                 required
                 placeholder='1112223334'
                 className='grid p-2 bg-blue-50 outline-none border-2 focus-within:border-amber-300'
-                name='Mobile'
-                id='Mobile'
+                name='mobile'
+                id='mobile'
                 value={userData.mobile}
                 onChange={handelOnChange}
                 />
             </div>
-            <button className='border px-4 py-2 hover:text-neutral-800 font-semibold rounded-xl focus-within:border-amber-300 bg-amber-100 hover:bg-amber-300 hover:scale-99 transition'>{loading ? "Loading..." : "Submit"}</button>
+            <button className='border px-4 py-2 hover:text-neutral-800 font-semibold rounded-xl focus-within:border-amber-300 bg-amber-100 hover:bg-amber-300 hover:scale-99 transition'>
+                {loading ? "Loading..." : "Submit"}
+            </button>
            </form>
         </div>
     );  

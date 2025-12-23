@@ -2,7 +2,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import './index.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import toast,{ Toaster } from "react-hot-toast"
+import { Toaster } from "react-hot-toast"
 import { useEffect } from 'react'
 import getUserDetails from './utils/getUserDatails.js'
 import { setUserDetails } from './store/userSclice.js'
@@ -27,6 +27,7 @@ const location = useLocation();
       // console.log("data",Userdata.data.data);
         dispatch(setUserDetails(Userdata.data.data))
       } catch (error) {
+        console.log(error);
         
       }
 
@@ -65,8 +66,6 @@ const location = useLocation();
               
       } catch (error) {
         console.error("Error fetching subcategories:", error);
-      } finally {
-             
       } 
    }
 

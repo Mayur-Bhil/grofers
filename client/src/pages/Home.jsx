@@ -81,7 +81,7 @@ const handleRedirectListpage = (id, cat) => {
         <div className=''> 
               {
                 categoryData.map((c,index)=>{
-                  return <CategoryWiseProductDisplay key={c?._id+"CategoryWiseProducts"} id={c?._id} name={c?.name}/> 
+                  return <CategoryWiseProductDisplay key={c?._id+"CategoryWiseProducts"+index} id={c?._id} name={c?.name}/> 
                 })
               }
                 

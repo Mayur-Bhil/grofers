@@ -8,7 +8,7 @@ import Devider from "../components/Devider";
 import Axios from "../utils/useAxios";
 import summeryApis from "../common/summuryApi";
 import toast from "react-hot-toast";
-import {loadStripe} from "@stripe/stripe-js"
+// import {loadStripe} from "@stripe/stripe-js"
 import { priceWithDisCount } from "../utils/DisCountCunter";
 import { clearCart } from "../store/Cartslice";
 
@@ -88,7 +88,7 @@ const HandleCashOndelivery = async () => {
                 duration: 3000
             });
             
-            navigate('/myorders'); // Navigate to orders page instead of success
+            navigate('/dashboard/myorders'); // Navigate to orders page instead of success
         } else {
             throw new Error(response?.data?.message || "Failed to place order");
         }
